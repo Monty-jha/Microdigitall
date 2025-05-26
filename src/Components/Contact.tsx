@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import axios from 'axios';
+
+// Add base URL for backend
+const API_BASE_URL = 'http://localhost:5000';
 
 interface FormData {
   name: string;
@@ -61,13 +65,14 @@ const ContactPage: React.FC = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form data submitted:', formData);
-    setFormSubmitted(true);
-    
-    // Reset form after submission
-    setTimeout(() => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/contact`, formData);
+      console.log('Form submitted successfully:', response.data);
+      setFormSubmitted(true);
+      
+      // Reset form after submission
       setFormData({
         name: '',
         email: '',
@@ -75,8 +80,11 @@ const ContactPage: React.FC = () => {
         subject: '',
         message: '',
       });
-      setFormSubmitted(false);
-    }, 3000);
+    } catch (error: any) {
+      console.error('Error submitting form:', error);
+      const errorMessage = error.response?.data?.error || 'Failed to send message. Please try again later.';
+      alert(errorMessage);
+    }
   };
 
   return (

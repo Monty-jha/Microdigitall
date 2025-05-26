@@ -1,16 +1,20 @@
 {
-  "name": "micro.json",
+  "name": "microdigitall-website",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "MicroDigitall Website with Contact Form",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "cd backend && npm run dev",
+    "client": "vite"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.6",
+    "axios": "^1.9.0",
     "framer-motion": "^12.11.3",
     "lucide-react": "^0.510.0",
     "react": "^19.1.0",
@@ -23,6 +27,7 @@
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
+    "concurrently": "^8.2.2",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
