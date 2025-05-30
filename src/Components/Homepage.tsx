@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChevronDown, Server, Globe, Code, Smartphone, Cpu, Users, MessageSquare } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function HomePage() {
   // State for intro animation
@@ -115,56 +116,60 @@ export default function HomePage() {
   const slideUp = "transition-transform duration-1000 ease-out";
   const slideInLeft = "transition-transform duration-1000 ease-out";
   const slideInRight = "transition-transform duration-1000 ease-out";
-  const scaleIn = "transition-transform duration-700 ease-out";
+  const scaleIn = "transition-transform duration-700 ease-out";``
   
   // Enhanced Service data with larger cards and professional content
-  const services = [
-    {
-      icon: <Cpu className="h-12 w-12 mb-6 text-indigo-400" />,
-      title: "AI & Machine Learning",
-      description: "Intelligent solutions leveraging artificial intelligence, machine learning, and data analytics. We implement predictive models, automation systems, and AI-powered features to drive business innovation and efficiency.",
-      features: ["Predictive analytics", "Process automation", "Natural language processing", "Computer vision"],
-      gradient: "from-indigo-600/20 to-purple-600/20"
-    },
-    {
-      icon: <MessageSquare className="h-12 w-12 mb-6 text-orange-400" />,
-      title: "Digital Marketing Solutions",
-      description: "Complete digital marketing strategies to boost your online presence and drive business growth. From SEO and social media management to PPC campaigns and content marketing, we help you reach your target audience effectively.",
-      features: ["SEO & SEM optimization", "Social media marketing", "Content strategy", "PPC campaigns", "Analytics & reporting", "Brand development"],
-      gradient: "from-orange-600/20 to-red-600/20"
-    },
-   
-    {
-      icon: <Globe className="h-12 w-12 mb-6 text-green-400" />,
-      title: "Web & App Development",
-      description: "Comprehensive digital solutions including responsive websites, progressive web apps, and native mobile applications for iOS and Android. We create seamless user experiences across all platforms using modern frameworks like React, Flutter, and React Native.",
-      features: ["Responsive web design", "Mobile app development", "Cross-platform solutions", "UI/UX optimization", "App Store deployment", "PWA development"],
-      gradient: "from-green-600/20 to-emerald-600/20"
-    },
-    {
-      icon: <Code className="h-12 w-12 mb-6 text-purple-400" />,
-      title: "Custom Software Development",
-      description: "Full-stack development using modern technologies like React, Node.js, Python, and .NET. We build scalable applications with clean architecture, comprehensive testing, and maintainable code that grows with your business.",
-      features: ["Full-stack development", "Agile methodology", "Code optimization", "Performance testing"],
-      gradient: "from-purple-600/20 to-pink-600/20"
-    },
-
-     {
-      icon: <Server className="h-12 w-12 mb-6 text-blue-400" />,
-      title: "Cloud Infrastructure Solutions",
-      description: "Enterprise-grade cloud architecture with AWS, Azure, and Google Cloud. We provide scalable, secure, and cost-effective infrastructure solutions with 99.9% uptime guarantee, automated scaling, and comprehensive monitoring.",
-      features: ["Multi-cloud deployment", "Auto-scaling", "24/7 monitoring", "Disaster recovery"],
-      gradient: "from-blue-600/20 to-cyan-600/20"
-    },
-   
-    {
-      icon: <Users className="h-12 w-12 mb-6 text-teal-400" />,
-      title: "IT Consulting & Strategy",
-      description: "Strategic technology consulting to align IT infrastructure with business objectives. We provide comprehensive assessments, digital transformation roadmaps, and ongoing support to optimize your technology investments.",
-      features: ["Technology assessment", "Digital transformation", "Cost optimization", "Strategic planning"],
-      gradient: "from-teal-600/20 to-cyan-600/20"
-    }
-  ];
+ // Services Array with Paths
+const services = [
+  {
+    icon: <Cpu className="h-12 w-12 mb-6 text-indigo-400" />,
+    title: "AI & Machine Learning",
+    description: "Intelligent solutions leveraging artificial intelligence, machine learning, and data analytics. We implement predictive models, automation systems, and AI-powered features to drive business innovation and efficiency.",
+    features: ["Predictive analytics", "Process automation", "Natural language processing", "Computer vision"],
+    gradient: "from-indigo-600/20 to-purple-600/20",
+    path: "/AIsolutions"
+  },
+  {
+    icon: <MessageSquare className="h-12 w-12 mb-6 text-orange-400" />,
+    title: "Digital Marketing Solutions",
+    description: "Complete digital marketing strategies to boost your online presence and drive business growth. From SEO and social media management to PPC campaigns and content marketing, we help you reach your target audience effectively.",
+    features: ["SEO & SEM optimization", "Social media marketing", "Content strategy", "PPC campaigns", "Analytics & reporting", "Brand development"],
+    gradient: "from-orange-600/20 to-red-600/20",
+    path: "/digitalmarketing"
+  },
+  {
+    icon: <Globe className="h-12 w-12 mb-6 text-green-400" />,
+    title: "Web & App Development",
+    description: "Comprehensive digital solutions including responsive websites, progressive web apps, and native mobile applications for iOS and Android. We create seamless user experiences across all platforms using modern frameworks like React, Flutter, and React Native.",
+    features: ["Responsive web design", "Mobile app development", "Cross-platform solutions", "UI/UX optimization", "App Store deployment", "PWA development"],
+    gradient: "from-green-600/20 to-emerald-600/20",
+    path: "/webdevelopment"
+  },
+  {
+    icon: <Code className="h-12 w-12 mb-6 text-purple-400" />,
+    title: "Custom Software Development",
+    description: "Full-stack development using modern technologies like React, Node.js, Python, and .NET. We build scalable applications with clean architecture, comprehensive testing, and maintainable code that grows with your business.",
+    features: ["Full-stack development", "Agile methodology", "Code optimization", "Performance testing"],
+    gradient: "from-purple-600/20 to-pink-600/20",
+    path: "/CustomService"
+  },
+  {
+    icon: <Server className="h-12 w-12 mb-6 text-blue-400" />,
+    title: "Cloud Infrastructure Solutions",
+    description: "Enterprise-grade cloud architecture with AWS, Azure, and Google Cloud. We provide scalable, secure, and cost-effective infrastructure solutions with 99.9% uptime guarantee, automated scaling, and comprehensive monitoring.",
+    features: ["Multi-cloud deployment", "Auto-scaling", "24/7 monitoring", "Disaster recovery"],
+    gradient: "from-blue-600/20 to-cyan-600/20",
+    path: "/Cloud"
+  },
+  {
+    icon: <Users className="h-12 w-12 mb-6 text-teal-400" />,
+    title: "IT Consulting & Strategy",
+    description: "Strategic technology consulting to align IT infrastructure with business objectives. We provide comprehensive assessments, digital transformation roadmaps, and ongoing support to optimize your technology investments.",
+    features: ["Technology assessment", "Digital transformation", "Cost optimization", "Strategic planning"],
+    gradient: "from-teal-600/20 to-cyan-600/20",
+    path: "/ITS"
+  }
+];
   
   // Testimonial data
   const testimonials = [
@@ -326,12 +331,14 @@ export default function HomePage() {
             className={`flex flex-col sm:flex-row gap-4 justify-center ${fadeIn} ${isVisible.hero ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '600ms' }}
           >
-            <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105 relative z-10">
-              Get Started
-            </button>
-            <button className="px-8 py-3 border-2 border-blue-400 text-blue-400 hover:bg-blue-900/20 font-medium rounded-lg transition duration-300 relative z-10">
+           <Link to="/contact">
+  <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105 relative z-10">
+    Get Started
+  </button>
+</Link>
+            {/* <button className="px-8 py-3 border-2 border-blue-400 text-blue-400 hover:bg-blue-900/20 font-medium rounded-lg transition duration-300 relative z-10">
               Learn More
-            </button>
+            </button> */}
           </div>
         </div>
         
@@ -361,137 +368,157 @@ export default function HomePage() {
 
       {/* Enhanced Professional Services Section */}
       <section 
-        ref={servicesRef}
-        className="py-24 px-4 relative overflow-hidden"
-        style={{
-          background: "linear-gradient(180deg, #0a1a3f 0%, #0d1323 50%, #000000 100%)"
-        }}
-      >
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-20 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-40 right-20 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-600/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        </div>
+  ref={servicesRef}
+  className="py-24 px-4 relative overflow-hidden"
+  style={{
+    background: "linear-gradient(180deg, #0a1a3f 0%, #0d1323 50%, #000000 100%)"
+  }}
+>
+  {/* Animated Background Elements */}
+  <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute top-20 left-20 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse"></div>
+    <div className="absolute bottom-40 right-20 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-600/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+  </div>
 
-        <div className="container mx-auto relative z-10">
-          <div className="text-center mb-20">
-            {/* <div className="inline-block mb-4">
-              <span className="px-6 py-2 bg-blue-600/20 text-blue-400 rounded-full text-sm font-medium border border-blue-600/30">
-                Our Expertise
-              </span>
-            </div> */}
-            <h2 
-              className={`text-4xl md:text-5xl font-bold mb-6 ${fadeIn} ${isVisible.services ? 'opacity-100' : 'opacity-0'}`}
-            >
-              Professional <span className="text-blue-400">IT Services</span>
-            </h2>
-            <p 
-              className={`text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed ${fadeIn} ${isVisible.services ? 'opacity-100' : 'opacity-0'}`}
-              style={{ transitionDelay: '200ms' }}
-            >
-              Comprehensive technology solutions designed to accelerate your digital transformation journey with industry-leading expertise and cutting-edge innovation
-            </p>
+  <div className="container mx-auto relative z-10">
+    <div className="text-center mb-20">
+      <h2 
+        className={`text-4xl md:text-5xl font-bold mb-6 ${fadeIn} ${isVisible.services ? 'opacity-100' : 'opacity-0'}`}
+      >
+        Professional <span className="text-blue-400">IT Services</span>
+      </h2>
+      <p 
+        className={`text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed ${fadeIn} ${isVisible.services ? 'opacity-100' : 'opacity-0'}`}
+        style={{ transitionDelay: '200ms' }}
+      >
+        Comprehensive technology solutions designed to accelerate your digital transformation journey with industry-leading expertise and cutting-edge innovation
+      </p>
+    </div>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10">
+      {services.map((service, index) => (
+        <div 
+          key={index}
+          className={`group relative bg-gradient-to-br ${service.gradient} backdrop-blur-sm p-8 pb-20 rounded-2xl border border-gray-800/50 hover:border-blue-500/50 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-900/25 ${fadeIn} ${scaleIn} ${isVisible.services ? 'opacity-100 transform-none' : 'opacity-0 scale-95'} service-card-hover`}
+          style={{ transitionDelay: `${300 + index * 150}ms` }}
+        >
+          {/* Animated border glow */}
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-600/0 via-blue-600/20 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
+          
+          {/* Icon with animated background */}
+          <div className="relative mb-6">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform scale-150"></div>
+            <div className="relative bg-gray-900/50 p-4 rounded-xl w-fit group-hover:bg-gray-800/70 transition-colors duration-300">
+              {service.icon}
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10">
-            {services.map((service, index) => (
+          <h3 className="text-xl md:text-2xl font-bold mb-4 text-white group-hover:text-blue-100 transition-colors duration-300">
+            {service.title}
+          </h3>
+          
+          <p className="text-gray-400 mb-6 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+            {service.description}
+          </p>
+          
+          {/* Feature list */}
+          <div className="space-y-2 mb-8">
+            {service.features.map((feature, featureIndex) => (
               <div 
-                key={index}
-                className={`group relative bg-gradient-to-br ${service.gradient} backdrop-blur-sm p-8 rounded-2xl border border-gray-800/50 hover:border-blue-500/50 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-900/25 ${fadeIn} ${scaleIn} ${isVisible.services ? 'opacity-100 transform-none' : 'opacity-0 scale-95'} service-card-hover`}
-                style={{ transitionDelay: `${300 + index * 150}ms` }}
+                key={featureIndex} 
+                className="flex items-center gap-3 text-sm text-gray-500 group-hover:text-gray-400 transition-colors duration-300"
               >
-                {/* Animated border glow */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-600/0 via-blue-600/20 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
-                
-                {/* Icon with animated background */}
-                <div className="relative mb-6">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform scale-150"></div>
-                  <div className="relative bg-gray-900/50 p-4 rounded-xl w-fit group-hover:bg-gray-800/70 transition-colors duration-300">
-                    {service.icon}
-                  </div>
-                </div>
-                
-                <h3 className="text-xl md:text-2xl font-bold mb-4 text-white group-hover:text-blue-100 transition-colors duration-300">
-                  {service.title}
-                </h3>
-                
-                <p className="text-gray-400 mb-6 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
-                  {service.description}
-                </p>
-                
-                {/* Feature list */}
-                <div className="space-y-2">
-                  {service.features.map((feature, featureIndex) => (
-                    <div 
-                      key={featureIndex} 
-                      className="flex items-center gap-3 text-sm text-gray-500 group-hover:text-gray-400 transition-colors duration-300"
-                    >
-                      <div className="w-1.5 h-1.5 bg-blue-400 rounded-full group-hover:bg-blue-300 transition-colors duration-300"></div>
-                      <span>{feature}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-purple-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
-                {/* Learn more button - appears on hover */}
-                <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                  <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
-                    Learn More
-                  </button>
-                </div>
+                <div className="w-1.5 h-1.5 bg-blue-400 rounded-full group-hover:bg-blue-300 transition-colors duration-300"></div>
+                <span>{feature}</span>
               </div>
             ))}
           </div>
 
-          {/* Call to action */}
-          <div 
-            className={`text-center mt-16 ${fadeIn} ${isVisible.services ? 'opacity-100' : 'opacity-0'}`}
-            style={{ transitionDelay: '1200ms' }}
-          >
-           
+          {/* Learn More Button - Always visible, positioned at bottom */}
+          <div className="absolute bottom-6 left-8 right-8">
+            <button 
+              onClick={() => {
+                // Handle navigation based on service path
+                if (service.path.startsWith('http')) {
+                  window.open(service.path, '_blank');
+                } else {
+                  // For internal routing - replace with your preferred navigation method
+                  // Examples:
+                  // For React Router: navigate(service.path)
+                  // For Next.js: router.push(service.path)
+                  // For simple navigation: window.location.href = service.path
+                  window.location.href = service.path;
+                }
+              }}
+              className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-600/25 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+            >
+              <span className="flex items-center justify-center gap-2">
+                Learn More
+                <svg 
+                  className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </button>
           </div>
-        </div>
 
-        {/* Professional service card animations */}
-        <style jsx global>{`
-          @keyframes serviceFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-          }
-          
-          @keyframes serviceGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.1); }
-            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.2); }
-          }
-          
-          .service-card-hover:hover {
-            animation: serviceFloat 3s ease-in-out infinite, serviceGlow 2s ease-in-out infinite;
-          }
-          
-          .service-card-hover::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 1rem;
-            padding: 1px;
-            background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.3), transparent);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-          }
-          
-          .service-card-hover:hover::before {
-            opacity: 1;
-          }
-        `}</style>
-      </section>
+          {/* Hover overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-purple-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+        </div>
+      ))}
+    </div>
+
+    {/* Call to action */}
+    <div 
+      className={`text-center mt-16 ${fadeIn} ${isVisible.services ? 'opacity-100' : 'opacity-0'}`}
+      style={{ transitionDelay: '1200ms' }}
+    >
+      {/* Add your CTA content here if needed */}
+    </div>
+  </div>
+
+  {/* Professional service card animations */}
+  <style jsx global>{`
+    @keyframes serviceFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+    
+    @keyframes serviceGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.1); }
+      50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.2); }
+    }
+    
+    .service-card-hover:hover {
+      animation: serviceFloat 3s ease-in-out infinite, serviceGlow 2s ease-in-out infinite;
+    }
+    
+    .service-card-hover::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 1rem;
+      padding: 1px;
+      background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    
+    .service-card-hover:hover::before {
+      opacity: 1;
+    }
+  `}</style>
+</section>
 
       {/* About Section */}
       <section 
@@ -666,12 +693,11 @@ export default function HomePage() {
                 Get in touch with our team of experts today and discover how MicroDigitall can help you achieve your digital transformation goals.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/contact">
                 <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition duration-300 transform hover:scale-105">
                   Contact Us
                 </button>
-                <button className="px-8 py-3 border-2 border-blue-400 text-blue-400 hover:bg-blue-900/20 font-medium rounded-lg transition duration-300">
-                  Schedule a Demo
-                </button>
+                </Link>
               </div>
             </div>
           </div>

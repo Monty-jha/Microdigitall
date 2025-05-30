@@ -40,17 +40,18 @@ const ContactPage: React.FC = () => {
 
   // Service images for slider
   const images = [
-    "/api/placeholder/800/500", // Replace with actual image paths
-    "/api/placeholder/800/500",
-    "/api/placeholder/800/500",
-    "/api/placeholder/800/500"
+    "https://i.pinimg.com/originals/61/44/2f/61442f2241fc5abce9a83f053b0b904a.gif", // Replace with actual image paths
+    "https://cdn.dribbble.com/userupload/24390689/file/original-3f13cebc70b575018ccbb750588394bc.gif",
+    "https://i.pinimg.com/originals/c7/c6/f7/c7c6f7e8b3506ea46261ab7b55fc9faf.gif",
+    "https://images.fonearena.com/blog/wp-content/uploads/2023/09/Meta-AI-Generative-Features.gif",
+    "https://ndmeaa.com/image/Web-development.gif"
   ];
 
   // Auto slide change
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % images.length);
-    }, 5000);
+    }, 2000);
     
     return () => clearInterval(timer);
   }, []);
@@ -159,7 +160,7 @@ const ContactPage: React.FC = () => {
             {/* Google Map */}
             <div className="w-full h-64 rounded-lg overflow-hidden shadow-lg border border-blue-800">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.2854872193206!2d-122.08401932414065!3d37.42199997200275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fba02425dad8f%3A0x6c296c66619367e0!2sGoogleplex!5e0!3m2!1sen!2sus!4v1713390500468!5m2!1sen!2sus"
+                src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3503.4700268270813!2d77.30962587549907!3d28.585672975690418!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjjCsDM1JzA4LjQiTiA3N8KwMTgnNDMuOSJF!5e0!3m2!1sen!2sin!4v1748414882148!5m2!1sen!2sin"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -288,7 +289,7 @@ const ContactPage: React.FC = () => {
         >
           <h2 className="text-3xl font-bold mb-8 text-center text-blue-400">Our IT Services</h2>
           
-          <div className="relative h-96 rounded-xl overflow-hidden shadow-2xl border border-blue-900">
+          <div className="relative h-96 rounded-xl overflow-hidden shadow-2xl border border-blue-900 bg-gray-900">
             {/* Image Slider */}
             <div className="relative h-full w-full">
               {images.map((img, index) => (
@@ -300,22 +301,32 @@ const ContactPage: React.FC = () => {
                   className="absolute inset-0"
                   style={{ display: index === currentSlide ? 'block' : 'none' }}
                 >
-                  <div 
-                    className="h-full w-full bg-cover bg-center" 
-                    style={{ backgroundImage: `url(${img})` }}
+                  <img 
+                    src={img} 
+                    alt={`Service ${index + 1}`}
+                    className="h-full w-full object-cover"
+                    style={{ 
+                      objectFit: 'cover',
+                      objectPosition: 'center'
+                    }}
+                    onError={(e) => {
+                      console.log(`Failed to load image: ${img}`);
+                    }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-8">
-                    <h3 className="text-2xl font-bold text-white mb-2">
-                      {index === 0 && "Web Development"}
-                      {index === 1 && "Mobile Applications"}
-                      {index === 2 && "Cloud Solutions"}
-                      {index === 3 && "Cybersecurity Services"}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-8">
+                    <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg">
+                      {index === 0 && "Marketing Solution"}
+                      {index === 1 && "Cloud Solution"}
+                      {index === 2 && "AI Solution"}
+                      {index === 3 && "Meta Solution"}
+                      {index === 4 && "Website & App Development"}
                     </h3>
-                    <p className="text-gray-200 mb-4">
-                      {index === 0 && "Custom websites and web applications tailored to your business needs."}
-                      {index === 1 && "Native and cross-platform mobile solutions for iOS and Android."}
-                      {index === 2 && "Scalable cloud infrastructure and migration services."}
-                      {index === 3 && "Comprehensive security solutions to protect your digital assets."}
+                    <p className="text-gray-200 mb-4 drop-shadow-md">
+                      {index === 0 && "Turn clicks into customers with data-driven marketing strategies that deliver real results."}
+                      {index === 1 && "Empower your business with scalable, secure, and seamless cloud infrastructure."}
+                      {index === 2 && "Automate smarter, not harder—AI that accelerates growth and decision-making."}
+                      {index === 3 && "Step into the future with immersive Meta experiences that redefine digital presence."}
+                      {index === 4 && "Build stunning, user-first websites and apps that perform as great as they look."}
                     </p>
                   </div>
                 </motion.div>

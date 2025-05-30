@@ -1,9 +1,24 @@
 import { useState, useEffect, useRef } from 'react';
-import { ChevronDown, LayoutGrid, Cloud, Brain, Glasses, Monitor, Menu, X } from 'lucide-react';
+import { LayoutGrid, Cloud, Brain, Glasses, Monitor, Menu, X, ChevronDown } from 'lucide-react';
 import logo from '../assets/logo.png';
 
 // Menu Item Component
-const MenuItem = ({ label, icon, href, onClose, delay }) => {
+const MenuItem = ({ label, icon, href, onClose, delay, hasDropdown, onClick }) => {
+  if (hasDropdown) {
+    return (
+      <button
+        onClick={onClick}
+        className="flex items-center justify-between px-6 py-4 text-lg text-white bg-blue-900/20 hover:bg-blue-600/40 transition-all duration-300 rounded-md shadow-md border border-blue-500/20 hover:border-blue-400/40 hover:translate-y-[-2px] w-full"
+      >
+        <div className="flex items-center">
+          {icon && <span className="mr-4">{icon}</span>}
+          <span>{label}</span>
+        </div>
+        <ChevronDown size={20} className="ml-2 transition-transform duration-300" />
+      </button>
+    );
+  }
+
   return (
     <a
       href={href}
@@ -16,17 +31,73 @@ const MenuItem = ({ label, icon, href, onClose, delay }) => {
   );
 };
 
-// Services Item Component
-const ServiceItem = ({ name, icon, href, onClose }) => {
+// Service Button Component
+const ServiceButton = ({ name, icon, href, onClose }) => {
+  const handleClick = () => {
+    if (onClose) onClose();
+    // Navigate to the specified path
+    window.location.href = href;
+  };
+
   return (
-    <a
-      href={href}
-      onClick={() => onClose && onClose()}
-      className="flex items-center w-full px-6 py-3 text-white/90 bg-blue-800/20 hover:bg-blue-700/40 transition-all duration-300 rounded-md my-2 border border-blue-500/20 hover:border-blue-400/30 hover:translate-x-1"
+    <button
+      onClick={handleClick}
+      className="flex items-center w-full px-6 py-3 text-white/90 bg-blue-800/20 hover:bg-blue-700/40 transition-all duration-300 rounded-md my-2 border border-blue-500/20 hover:border-blue-400/30 hover:translate-x-1 hover:scale-105"
     >
       <span className="mr-4">{icon}</span>
       <span>{name}</span>
-    </a>
+    </button>
+  );
+};
+
+// Dropdown Service Item Component
+const DropdownServiceItem = ({ name, icon, href, onClose }) => {
+  const handleClick = () => {
+    if (onClose) onClose();
+    window.location.href = href;
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className="flex items-center w-full px-4 py-3 text-white/90 bg-blue-800/10 hover:bg-blue-700/30 transition-all duration-300 rounded-md my-1 border border-blue-500/10 hover:border-blue-400/20 hover:translate-x-2"
+    >
+      <span className="mr-3 text-blue-400">{icon}</span>
+      <span className="text-left">{name}</span>
+    </button>
+  );
+};
+
+// Services Dropdown Component
+const ServicesDropdown = ({ isOpen, services, onClose }) => {
+  return (
+    <div 
+      className={`overflow-hidden transition-all duration-500 ease-in-out ${
+        isOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
+      }`}
+    >
+      <div className="bg-black/30 backdrop-blur-sm rounded-lg p-4 border border-blue-500/20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          {services.map((service, index) => (
+            <div 
+              key={index}
+              className="transform transition-all duration-300"
+              style={{ 
+                transitionDelay: `${index * 50}ms`,
+                transform: isOpen ? 'translateY(0)' : 'translateY(-10px)'
+              }}
+            >
+              <DropdownServiceItem 
+                name={service.name} 
+                icon={service.icon} 
+                href={service.href} 
+                onClose={onClose} 
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -52,20 +123,23 @@ const MenuBackground = () => {
 
 // Menu Overlay Component
 const MenuOverlay = ({ isOpen, onClose, services }) => {
-  const [serviceDropdownOpen, setServiceDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [servicesVisible, setServicesVisible] = useState(false);
+  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   
-  // Close dropdown when clicking outside
+  // Show services with a slight delay for better animation
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (serviceDropdownOpen && dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setServiceDropdownOpen(false);
-      }
+    if (isOpen) {
+      const timer = setTimeout(() => setServicesVisible(true), 300);
+      return () => clearTimeout(timer);
+    } else {
+      setServicesVisible(false);
+      setServicesDropdownOpen(false);
     }
-    
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [serviceDropdownOpen]);
+  }, [isOpen]);
+
+  const toggleServicesDropdown = () => {
+    setServicesDropdownOpen(!servicesDropdownOpen);
+  };
   
   return (
     <div 
@@ -97,59 +171,41 @@ const MenuOverlay = ({ isOpen, onClose, services }) => {
       <div className="flex-1 flex items-center justify-center relative z-10 pt-8">
         <div className="relative z-10 w-full max-w-6xl mx-auto px-4">
           {/* Desktop layout */}
-          <div className="hidden md:flex flex-row items-center justify-center space-x-4">
-            <div className="transform transition-all duration-500 delay-100" style={{ opacity: isOpen ? 1 : 0 }}>
-              <MenuItem label="Home" href="/Home" onClose={onClose} />
-            </div>
-            
-            <div className="transform transition-all duration-500 delay-200" style={{ opacity: isOpen ? 1 : 0 }}>
-              <MenuItem label="About" href="/about" onClose={onClose} />
-            </div>
-            
-            {/* Services dropdown */}
-            <div 
-              className="relative transform transition-all duration-500 delay-300" 
-              style={{ opacity: isOpen ? 1 : 0 }}
-              ref={dropdownRef}
-            >
-              <button
-                onClick={() => setServiceDropdownOpen(!serviceDropdownOpen)}
-                className="flex items-center px-6 py-4 text-lg text-white bg-blue-900/30 hover:bg-blue-600/50 transition-colors rounded-md shadow-md border border-blue-500/20"
-                aria-expanded={serviceDropdownOpen}
-              >
-                <span>Services</span>
-                <ChevronDown 
-                  size={20} 
-                  className={`ml-2 transition-transform duration-300 ${serviceDropdownOpen ? 'rotate-180' : ''}`} 
-                />
-              </button>
+          <div className="hidden md:flex flex-col items-center justify-center space-y-8">
+            {/* Main Menu Items with Our Services button in the same row */}
+            <div className="flex flex-row items-center justify-center space-x-4 mb-8">
+              <div className="transform transition-all duration-500 delay-100" style={{ opacity: isOpen ? 1 : 0 }}>
+                <MenuItem label="Home" href="/Home" onClose={onClose} />
+              </div>
               
-              <div 
-                className={`absolute left-0 min-w-max mt-2 rounded-md bg-black/80 border border-blue-600/50 backdrop-blur-sm transition-all duration-300 transform origin-top-left ${
-                  serviceDropdownOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
-                }`}
-              >
-                {services.map((service, index) => (
-                  <div 
-                    key={index}
-                    className="transform transition-all duration-300"
-                    style={{ 
-                      transitionDelay: `${100 + (index * 50)}ms`,
-                      opacity: serviceDropdownOpen ? 1 : 0
-                    }}
-                  >
-                    <ServiceItem name={service.name} icon={service.icon} href={service.href} onClose={onClose} />
-                  </div>
-                ))}
+              <div className="transform transition-all duration-500 delay-200" style={{ opacity: isOpen ? 1 : 0 }}>
+                <MenuItem label="About" href="/about" onClose={onClose} />
+              </div>
+              
+              <div className="transform transition-all duration-500 delay-400" style={{ opacity: isOpen ? 1 : 0 }}>
+                <MenuItem label="Contact" href="/contact" onClose={onClose} />
+              </div>
+
+              <div className="transform transition-all duration-500 delay-300" style={{ opacity: isOpen ? 1 : 0 }}>
+                <MenuItem 
+                  label="Our Services" 
+                  hasDropdown={true}
+                  onClick={toggleServicesDropdown}
+                />
               </div>
             </div>
-            
-            <div className="transform transition-all duration-500 delay-400" style={{ opacity: isOpen ? 1 : 0 }}>
-              <MenuItem label="Contact" href="/contact" onClose={onClose} />
+
+            {/* Services Dropdown positioned below the buttons */}
+            <div className="w-full max-w-4xl">
+              <ServicesDropdown 
+                isOpen={servicesDropdownOpen} 
+                services={services} 
+                onClose={onClose} 
+              />
             </div>
           </div>
           
-          {/* Mobile layout with enhanced sliding animations */}
+          {/* Mobile layout */}
           <div className="md:hidden flex flex-col items-center justify-center space-y-4 w-full">
             <div className="w-full transform transition-all duration-500 delay-100" 
               style={{ 
@@ -167,53 +223,32 @@ const MenuOverlay = ({ isOpen, onClose, services }) => {
               <MenuItem label="About" href="/About" onClose={onClose} />
             </div>
             
-            {/* Services accordion for mobile */}
-            <div className="w-full transform transition-all duration-500 delay-300" 
-              style={{ 
-                opacity: isOpen ? 1 : 0, 
-                transform: isOpen ? 'translateX(0)' : 'translateX(100px)' 
-              }}
-              ref={dropdownRef}
-            >
-              <button
-                onClick={() => setServiceDropdownOpen(!serviceDropdownOpen)}
-                className="flex items-center justify-between w-full px-6 py-4 text-lg text-white bg-blue-900/30 hover:bg-blue-600/50 transition-colors rounded-md shadow-md border border-blue-500/20"
-                aria-expanded={serviceDropdownOpen}
-              >
-                <span>Services</span>
-                <ChevronDown 
-                  size={20} 
-                  className={`transition-transform duration-300 ${serviceDropdownOpen ? 'rotate-180' : ''}`} 
-                />
-              </button>
-              
-              <div 
-                className={`overflow-hidden transition-all duration-500 mt-2 bg-black/80 backdrop-blur-sm border border-blue-600/20 rounded-md ${
-                  serviceDropdownOpen ? 'max-h-96 py-2 opacity-100' : 'max-h-0 opacity-0'
-                }`}
-              >
-                {services.map((service, index) => (
-                  <div 
-                    key={index}
-                    className="transform transition-all duration-300"
-                    style={{ 
-                      transitionDelay: `${100 + (index * 50)}ms`,
-                      opacity: serviceDropdownOpen ? 1 : 0,
-                      transform: serviceDropdownOpen ? 'translateX(0)' : 'translateX(100px)'
-                    }}
-                  >
-                    <ServiceItem name={service.name} icon={service.icon} href={service.href} onClose={onClose} />
-                  </div>
-                ))}
-              </div>
-            </div>
-            
             <div className="w-full transform transition-all duration-500 delay-400" 
               style={{ 
                 opacity: isOpen ? 1 : 0, 
                 transform: isOpen ? 'translateX(0)' : 'translateX(100px)' 
               }}>
               <MenuItem label="Contact" href="/contact" onClose={onClose} />
+            </div>
+
+            {/* Our Services Button with Dropdown for Mobile */}
+            <div className="w-full mt-4">
+              <div className="transform transition-all duration-500 delay-300" 
+                style={{ 
+                  opacity: isOpen ? 1 : 0, 
+                  transform: isOpen ? 'translateX(0)' : 'translateX(100px)' 
+                }}>
+                <MenuItem 
+                  label="Our Services" 
+                  hasDropdown={true}
+                  onClick={toggleServicesDropdown}
+                />
+                <ServicesDropdown 
+                  isOpen={servicesDropdownOpen} 
+                  services={services} 
+                  onClose={onClose} 
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -230,11 +265,12 @@ export default function ProfessionalNavbar() {
   
   // Services data
   const services = [
-    { name: "Marketing Solution", icon: <LayoutGrid size={20} />, href: "/services/marketing" },
-    { name: "Cloud Solution", icon: <Cloud size={20} />, href: "/services/cloud" },
-    { name: "AI Solution", icon: <Brain size={20} />, href: "/services/ai" },
-    { name: "Meta Solutions", icon: <Glasses size={20} />, href: "/services/meta" },
-    { name: "Website & App Development", icon: <Monitor size={20} />, href: "/services/development" }
+    { name: "Digital Marketing Solutions", icon: <LayoutGrid size={20} />, href: "/digitalmarketing" },
+    { name: "AI & Machine Learning", icon: <Brain size={20} />, href: "/AIsolutions" },
+    { name: "Web & App Development", icon: <Monitor size={20} />, href: "/webdevelopment" },
+    { name: "Custom Software Development", icon: <Glasses size={20} />, href: "/CustomService" },
+    { name: "Cloud Infrastructure Solutions", icon: <Cloud size={20} />, href: "/Cloud" },
+    { name: "IT Consulting & Strategy", icon: <LayoutGrid size={20} />, href: "/ITS" }
   ];
 
   useEffect(() => {
