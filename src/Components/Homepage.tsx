@@ -86,7 +86,10 @@ export default function HomePage() {
               setIsVisible(prev => ({ ...prev, [key]: true }));
             }
           },
-          { threshold: 0.2 }
+          { 
+            threshold: key === 'services' ? 0.1 : 0.2, // Lower threshold for services section on mobile
+            rootMargin: key === 'services' ? '50px 0px' : '0px'  // Add margin for services section
+          }
         );
         
         observers[key].observe(ref.current);
@@ -116,7 +119,7 @@ export default function HomePage() {
   const slideUp = "transition-transform duration-1000 ease-out";
   const slideInLeft = "transition-transform duration-1000 ease-out";
   const slideInRight = "transition-transform duration-1000 ease-out";
-  const scaleIn = "transition-transform duration-700 ease-out";``
+  const scaleIn = "transition-transform duration-700 ease-out";
   
   // Enhanced Service data with larger cards and professional content
  // Services Array with Paths
@@ -369,7 +372,7 @@ const services = [
       {/* Enhanced Professional Services Section */}
       <section 
   ref={servicesRef}
-  className="py-24 px-4 relative overflow-hidden"
+  className="py-16 sm:py-20 md:py-24 px-4 relative overflow-hidden min-h-screen"
   style={{
     background: "linear-gradient(180deg, #0a1a3f 0%, #0d1323 50%, #000000 100%)"
   }}
@@ -382,61 +385,65 @@ const services = [
   </div>
 
   <div className="container mx-auto relative z-10">
-    <div className="text-center mb-20">
+    <div className="text-center mb-12 sm:mb-16 md:mb-20">
       <h2 
-        className={`text-4xl md:text-5xl font-bold mb-6 ${fadeIn} ${isVisible.services ? 'opacity-100' : 'opacity-0'}`}
+        className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 px-4 ${fadeIn} ${isVisible.services ? 'opacity-100' : 'opacity-0'}`}
       >
         Professional <span className="text-blue-400">IT Services</span>
       </h2>
       <p 
-        className={`text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed ${fadeIn} ${isVisible.services ? 'opacity-100' : 'opacity-0'}`}
+        className={`text-gray-400 max-w-3xl mx-auto text-base sm:text-lg leading-relaxed px-4 ${fadeIn} ${isVisible.services ? 'opacity-100' : 'opacity-0'}`}
         style={{ transitionDelay: '200ms' }}
       >
         Comprehensive technology solutions designed to accelerate your digital transformation journey with industry-leading expertise and cutting-edge innovation
       </p>
     </div>
     
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
       {services.map((service, index) => (
         <div 
           key={index}
-          className={`group relative bg-gradient-to-br ${service.gradient} backdrop-blur-sm p-8 pb-20 rounded-2xl border border-gray-800/50 hover:border-blue-500/50 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-900/25 ${fadeIn} ${scaleIn} ${isVisible.services ? 'opacity-100 transform-none' : 'opacity-0 scale-95'} service-card-hover`}
-          style={{ transitionDelay: `${300 + index * 150}ms` }}
+          className={`group relative bg-gradient-to-br ${service.gradient} backdrop-blur-sm p-6 sm:p-8 pb-20 sm:pb-24 rounded-2xl border border-gray-800/50 hover:border-blue-500/50 transition-all duration-500 transform hover:scale-[1.02] sm:hover:scale-105 hover:shadow-2xl hover:shadow-blue-900/25 ${fadeIn} ${scaleIn} service-card-hover min-h-[400px] sm:min-h-[450px]`}
+          style={{ 
+            transitionDelay: `${300 + index * 150}ms`,
+            opacity: isVisible.services ? 1 : 0,
+            transform: isVisible.services ? 'scale(1)' : 'scale(0.95)'
+          }}
         >
           {/* Animated border glow */}
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-600/0 via-blue-600/20 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
           
           {/* Icon with animated background */}
-          <div className="relative mb-6">
+          <div className="relative mb-4 sm:mb-6">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform scale-150"></div>
-            <div className="relative bg-gray-900/50 p-4 rounded-xl w-fit group-hover:bg-gray-800/70 transition-colors duration-300">
+            <div className="relative bg-gray-900/50 p-3 sm:p-4 rounded-xl w-fit group-hover:bg-gray-800/70 transition-colors duration-300">
               {service.icon}
             </div>
           </div>
           
-          <h3 className="text-xl md:text-2xl font-bold mb-4 text-white group-hover:text-blue-100 transition-colors duration-300">
+          <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white group-hover:text-blue-100 transition-colors duration-300">
             {service.title}
           </h3>
           
-          <p className="text-gray-400 mb-6 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+          <p className="text-gray-400 mb-4 sm:mb-6 leading-relaxed group-hover:text-gray-300 transition-colors duration-300 text-sm sm:text-base">
             {service.description}
           </p>
           
           {/* Feature list */}
-          <div className="space-y-2 mb-8">
+          <div className="space-y-2 mb-6 sm:mb-8">
             {service.features.map((feature, featureIndex) => (
               <div 
                 key={featureIndex} 
-                className="flex items-center gap-3 text-sm text-gray-500 group-hover:text-gray-400 transition-colors duration-300"
+                className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-500 group-hover:text-gray-400 transition-colors duration-300"
               >
-                <div className="w-1.5 h-1.5 bg-blue-400 rounded-full group-hover:bg-blue-300 transition-colors duration-300"></div>
+                <div className="w-1.5 h-1.5 bg-blue-400 rounded-full group-hover:bg-blue-300 transition-colors duration-300 flex-shrink-0"></div>
                 <span>{feature}</span>
               </div>
             ))}
           </div>
 
           {/* Learn More Button - Always visible, positioned at bottom */}
-          <div className="absolute bottom-6 left-8 right-8">
+          <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-8 right-4 sm:right-8">
             <button 
               onClick={() => {
                 // Handle navigation based on service path
@@ -451,12 +458,12 @@ const services = [
                   window.location.href = service.path;
                 }
               }}
-              className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-600/25 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+              className="w-full px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-600/25 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 text-sm sm:text-base"
             >
               <span className="flex items-center justify-center gap-2">
                 Learn More
                 <svg 
-                  className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" 
+                  className="w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:translate-x-1" 
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
@@ -475,8 +482,11 @@ const services = [
 
     {/* Call to action */}
     <div 
-      className={`text-center mt-16 ${fadeIn} ${isVisible.services ? 'opacity-100' : 'opacity-0'}`}
-      style={{ transitionDelay: '1200ms' }}
+      className={`text-center mt-12 sm:mt-16 ${fadeIn}`}
+      style={{ 
+        transitionDelay: '1200ms',
+        opacity: isVisible.services ? 1 : 0
+      }}
     >
       {/* Add your CTA content here if needed */}
     </div>
@@ -516,6 +526,17 @@ const services = [
     
     .service-card-hover:hover::before {
       opacity: 1;
+    }
+
+    /* Mobile specific fixes */
+    @media (max-width: 640px) {
+      .service-card-hover {
+        min-height: 350px;
+      }
+      
+      .service-card-hover:hover {
+        transform: scale(1.01);
+      }
     }
   `}</style>
 </section>
@@ -616,61 +637,316 @@ const services = [
       </section>
 
       {/* Testimonials Section */}
-      <section 
-        ref={testimonialsRef}
-        className="py-20 px-4 relative overflow-hidden"
+      {/* Testimonials Section */}
+<section
+  ref={testimonialsRef}
+  className="py-20 px-4 relative overflow-hidden"
+  style={{
+    background: "linear-gradient(180deg, #0a192f 0%, #000000 100%)"
+  }}
+>
+  <div className="absolute top-0 left-0 w-full h-full">
+    <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-800 rounded-full opacity-10 blur-3xl"></div>
+    <div className="absolute top-20 left-20 w-64 h-64 bg-purple-800 rounded-full opacity-5 blur-2xl"></div>
+  </div>
+         
+  <div className="container mx-auto relative z-10">
+    <div className="text-center mb-16">
+      <h2
+        className={`text-3xl md:text-4xl font-bold mb-4 ${fadeIn} ${isVisible.testimonials ? 'opacity-100' : 'opacity-0'}`}
+      >
+        Client <span className="text-blue-400">Testimonials</span>
+      </h2>
+      <p
+        className={`text-gray-400 max-w-2xl mx-auto ${fadeIn} ${isVisible.testimonials ? 'opacity-100' : 'opacity-0'}`}
+        style={{ transitionDelay: '200ms' }}
+      >
+        Don't just take our word for it - hear what our clients have to say
+      </p>
+    </div>
+
+    {/* Auto-scrolling testimonials carousel */}
+    <div className="relative overflow-hidden">
+      <div 
+        className="flex gap-6"
         style={{
-          background: "linear-gradient(180deg, #0a192f 0%, #000000 100%)"
+          width: 'fit-content',
+          animation: 'scroll 60s linear infinite'
         }}
       >
-        <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-800 rounded-full opacity-10 blur-3xl"></div>
-        </div>
-        
-        <div className="container mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <h2 
-              className={`text-3xl md:text-4xl font-bold mb-4 ${fadeIn} ${isVisible.testimonials ? 'opacity-100' : 'opacity-0'}`}
-            >
-              Client <span className="text-blue-400">Testimonials</span>
-            </h2>
-            <p 
-              className={`text-gray-400 max-w-2xl mx-auto ${fadeIn} ${isVisible.testimonials ? 'opacity-100' : 'opacity-0'}`}
-              style={{ transitionDelay: '200ms' }}
-            >
-              Don't just take our word for it - hear what our clients have to say
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div 
-                key={index}
-                className={`bg-gradient-to-br from-gray-900 to-gray-950 p-6 rounded-xl border border-blue-900/30 ${fadeIn} ${slideUp} ${isVisible.testimonials ? 'opacity-100 transform-none' : 'opacity-0 translate-y-10'}`}
-                style={{ transitionDelay: `${300 + index * 150}ms` }}
-              >
-                <div className="mb-6">
-                  <MessageSquare className="text-blue-400 h-8 w-8 opacity-50" />
-                </div>
-                <p className="text-gray-300 italic mb-6">"{testimonial.quote}"</p>
-                <div>
-                  <p className="font-semibold text-white">{testimonial.author}</p>
-                  <p className="text-sm text-blue-400">{testimonial.position}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div 
-            className={`mt-16 text-center ${fadeIn} ${isVisible.testimonials ? 'opacity-100' : 'opacity-0'}`}
-            style={{ transitionDelay: '800ms' }}
+        {/* First set of testimonials */}
+        {[
+          {
+            quote: "This team transformed our digital presence completely. Our sales increased by 300% within 6 months!",
+            author: "Sarah Johnson",
+            position: "CEO, TechStart Inc.",
+            image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Outstanding service and incredible attention to detail. They delivered exactly what we envisioned.",
+            author: "Michael Chen",
+            position: "Founder, InnovateLab",
+            image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Professional, reliable, and results-driven. Best investment we've made for our business.",
+            author: "Emily Rodriguez",
+            position: "Marketing Director, GrowthCo",
+            image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "The ROI on our project exceeded all expectations. Highly recommend their services!",
+            author: "David Thompson",
+            position: "CTO, DataFlow Systems",
+            image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Exceptional creativity and technical expertise. They brought our vision to life perfectly.",
+            author: "Lisa Wang",
+            position: "Creative Director, DesignHub",
+            image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Fast delivery, excellent communication, and outstanding results. Couldn't be happier!",
+            author: "James Miller",
+            position: "VP Operations, ScaleTech",
+            image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "They understood our needs perfectly and delivered beyond expectations. Amazing team!",
+            author: "Sofia Andersson",
+            position: "Product Manager, NextGen",
+            image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Innovative solutions and flawless execution. Our conversion rates doubled overnight!",
+            author: "Robert Kim",
+            position: "E-commerce Director, ShopMax",
+            image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Professional service from start to finish. They made the complex seem simple.",
+            author: "Rachel Green",
+            position: "Startup Founder, EcoTech",
+            image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Game-changing results! Our online presence has never looked better.",
+            author: "Alex Rivera",
+            position: "Brand Manager, StyleCorp",
+            image: "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Incredible attention to detail and user experience. Our customers love the new platform!",
+            author: "Jennifer Lee",
+            position: "UX Lead, UserFirst",
+            image: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "They delivered on time, on budget, and exceeded quality expectations. Fantastic work!",
+            author: "Mark Stevens",
+            position: "Project Director, BuildRight",
+            image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Strategic thinking combined with technical excellence. Perfect partnership for growth!",
+            author: "Anna Kowalski",
+            position: "Growth Hacker, RapidScale",
+            image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Outstanding results and exceptional service. They truly care about client success.",
+            author: "Tom Wilson",
+            position: "Business Owner, LocalPro",
+            image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Transformed our digital strategy completely. Revenue increased by 250% in 4 months!",
+            author: "Maria Santos",
+            position: "CEO, HealthTech Solutions",
+            image: "https://images.unsplash.com/photo-1554151228-14d9def656e4?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Best decision we made for our business. Professional, creative, and results-oriented!",
+            author: "Chris Anderson",
+            position: "Founder, FutureVision",
+            image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+          }
+        ].map((testimonial, index) => (
+          <div
+            key={index}
+            className="flex-shrink-0 w-80 bg-gradient-to-br from-gray-900 to-gray-950 p-6 rounded-xl border border-blue-900/30 hover:border-blue-700/50 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-900/20"
           >
-            <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105">
-              View All Success Stories
-            </button>
+            <div className="flex items-center mb-4">
+              <img 
+                src={testimonial.image}
+                alt={testimonial.author}
+                className="w-12 h-12 rounded-full object-cover border-2 border-blue-400/30 mr-3"
+              />
+              <MessageSquare className="text-blue-400 h-6 w-6 opacity-50 ml-auto" />
+            </div>
+            <p className="text-gray-300 italic mb-6 text-sm leading-relaxed">
+              "{testimonial.quote}"
+            </p>
+            <div>
+              <p className="font-semibold text-white text-sm">{testimonial.author}</p>
+              <p className="text-xs text-blue-400">{testimonial.position}</p>
+            </div>
           </div>
-        </div>
-      </section>
+        ))}
+        
+        {/* Duplicate set for seamless loop */}
+        {[
+          {
+            quote: "This team transformed our digital presence completely. Our sales increased by 300% within 6 months!",
+            author: "Sarah Johnson",
+            position: "CEO, TechStart Inc.",
+            image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Outstanding service and incredible attention to detail. They delivered exactly what we envisioned.",
+            author: "Michael Chen",
+            position: "Founder, InnovateLab",
+            image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Professional, reliable, and results-driven. Best investment we've made for our business.",
+            author: "Emily Rodriguez",
+            position: "Marketing Director, GrowthCo",
+            image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "The ROI on our project exceeded all expectations. Highly recommend their services!",
+            author: "David Thompson",
+            position: "CTO, DataFlow Systems",
+            image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Exceptional creativity and technical expertise. They brought our vision to life perfectly.",
+            author: "Lisa Wang",
+            position: "Creative Director, DesignHub",
+            image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Fast delivery, excellent communication, and outstanding results. Couldn't be happier!",
+            author: "James Miller",
+            position: "VP Operations, ScaleTech",
+            image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "They understood our needs perfectly and delivered beyond expectations. Amazing team!",
+            author: "Sofia Andersson",
+            position: "Product Manager, NextGen",
+            image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Innovative solutions and flawless execution. Our conversion rates doubled overnight!",
+            author: "Robert Kim",
+            position: "E-commerce Director, ShopMax",
+            image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Professional service from start to finish. They made the complex seem simple.",
+            author: "Rachel Green",
+            position: "Startup Founder, EcoTech",
+            image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Game-changing results! Our online presence has never looked better.",
+            author: "Alex Rivera",
+            position: "Brand Manager, StyleCorp",
+            image: "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Incredible attention to detail and user experience. Our customers love the new platform!",
+            author: "Jennifer Lee",
+            position: "UX Lead, UserFirst",
+            image: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "They delivered on time, on budget, and exceeded quality expectations. Fantastic work!",
+            author: "Mark Stevens",
+            position: "Project Director, BuildRight",
+            image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Strategic thinking combined with technical excellence. Perfect partnership for growth!",
+            author: "Anna Kowalski",
+            position: "Growth Hacker, RapidScale",
+            image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Outstanding results and exceptional service. They truly care about client success.",
+            author: "Tom Wilson",
+            position: "Business Owner, LocalPro",
+            image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Transformed our digital strategy completely. Revenue increased by 250% in 4 months!",
+            author: "Maria Santos",
+            position: "CEO, HealthTech Solutions",
+            image: "https://images.unsplash.com/photo-1554151228-14d9def656e4?w=150&h=150&fit=crop&crop=face"
+          },
+          {
+            quote: "Best decision we made for our business. Professional, creative, and results-oriented!",
+            author: "Chris Anderson",
+            position: "Founder, FutureVision",
+            image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+          }
+        ].map((testimonial, index) => (
+          <div
+            key={`duplicate-${index}`}
+            className="flex-shrink-0 w-80 bg-gradient-to-br from-gray-900 to-gray-950 p-6 rounded-xl border border-blue-900/30 hover:border-blue-700/50 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-900/20"
+          >
+            <div className="flex items-center mb-4">
+              <img 
+                src={testimonial.image}
+                alt={testimonial.author}
+                className="w-12 h-12 rounded-full object-cover border-2 border-blue-400/30 mr-3"
+              />
+              <MessageSquare className="text-blue-400 h-6 w-6 opacity-50 ml-auto" />
+            </div>
+            <p className="text-gray-300 italic mb-6 text-sm leading-relaxed">
+              "{testimonial.quote}"
+            </p>
+            <div>
+              <p className="font-semibold text-white text-sm">{testimonial.author}</p>
+              <p className="text-xs text-blue-400">{testimonial.position}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div
+      className={`mt-16 text-center ${fadeIn} ${isVisible.testimonials ? 'opacity-100' : 'opacity-0'}`}
+      style={{ transitionDelay: '800ms' }}
+    >
+      {/* <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105">
+        View All Success Stories
+      </button> */}
+    </div>
+  </div>
+
+  <style jsx>{`
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+    
+    div[style*="animation: scroll"] {
+      animation: scroll 60s linear infinite;
+    }
+    
+    div[style*="animation: scroll"]:hover {
+      animation-play-state: paused;
+    }
+  `}</style>
+</section>
 
       {/* CTA Section */}
       <section 

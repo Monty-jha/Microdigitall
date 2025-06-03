@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 // Custom Card component to replace shadcn/ui
 const Card = ({ children, className = "", ...props }) => (
@@ -171,14 +172,14 @@ export default function DigitalMarketingSolutions() {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center pt-8 animate-slideUp" style={{ animationDelay: '1s' }}>
+            <Link to="/Contact">
             <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-bold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
               <span className="relative z-10">Get Marketing Audit</span>
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
+            </Link>
             
-            <button className="group px-8 py-4 border-2 border-purple-400 text-purple-400 rounded-full font-bold text-lg transition-all duration-300 hover:bg-purple-400/10 hover:scale-105 hover:shadow-lg hover:shadow-purple-400/25">
-              <span className="group-hover:text-white transition-colors duration-300">View Our Work</span>
-            </button>
+           
           </div>
         </div>
       </section>
@@ -320,14 +321,7 @@ export default function DigitalMarketingSolutions() {
                       </div>
                     </div>
                     
-                    <div className="flex justify-between items-center pt-4 border-t border-gray-700">
-                      <span className="text-lg font-semibold text-green-400">
-                        {service.price}
-                      </span>
-                      <button className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg text-sm font-semibold hover:scale-105 transition-transform duration-200">
-                        Get Started
-                      </button>
-                    </div>
+                    
                   </div>
                 </Card>
               </div>
@@ -378,27 +372,18 @@ export default function DigitalMarketingSolutions() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Link to="/Contact">
             <button className="group relative px-10 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-bold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-1">
               <span className="relative z-10">Start Your Campaign</span>
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
-            
-            <button className="group px-10 py-4 border-2 border-purple-400 text-purple-400 rounded-full font-bold text-lg transition-all duration-300 hover:bg-purple-400/10 hover:scale-105 transform hover:-translate-y-1">
-              <span className="group-hover:text-white transition-colors duration-300">Free Strategy Call</span>
-            </button>
+            </Link>
+           
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-4 border-t border-gray-800">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-gray-400 text-lg">
-            © 2025 MicroDigital Marketing Solutions. Driving Digital Success Every Day.
-          </p>
-        </div>
-      </footer>
-
+     
       {/* Custom Styles */}
       <style jsx>{`
         @keyframes fadeIn {

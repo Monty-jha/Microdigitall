@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 // Custom Card component to replace shadcn/ui dependency
 const Card = ({ children, className = "" }) => (
   <div className={`rounded-lg shadow-lg ${className}`}>
@@ -204,14 +204,13 @@ export default function CustomSoftwarePage() {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center pt-8 animate-slideUp" style={{ animationDelay: '1s' }}>
+            <Link to="/Contact">
             <button className="group relative px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full font-bold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25">
               <span className="relative z-10">Start Your Project</span>
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
-            
-            <button className="group px-8 py-4 border-2 border-cyan-400 text-cyan-400 rounded-full font-bold text-lg transition-all duration-300 hover:bg-cyan-400/10 hover:scale-105 hover:shadow-lg hover:shadow-cyan-400/25">
-              <span className="group-hover:text-white transition-colors duration-300">View Portfolio</span>
-            </button>
+            </Link>
+          
           </div>
         </div>
       </section>
@@ -359,12 +358,12 @@ export default function CustomSoftwarePage() {
                     </div>
                     
                     <div className="flex justify-between items-center pt-4 border-t border-gray-700">
-                      <span className="text-lg font-semibold text-green-400">
+                      {/* <span className="text-lg font-semibold text-green-400">
                         {service.price}
                       </span>
                       <button className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg text-sm font-semibold hover:scale-105 transition-transform duration-200">
                         Get Quote
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </Card>
@@ -416,26 +415,18 @@ export default function CustomSoftwarePage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Link to="/Contact">
             <button className="group relative px-10 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full font-bold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25 transform hover:-translate-y-1">
               <span className="relative z-10">Start Your Project</span>
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
-            
-            <button className="group px-10 py-4 border-2 border-cyan-400 text-cyan-400 rounded-full font-bold text-lg transition-all duration-300 hover:bg-cyan-400/10 hover:scale-105 transform hover:-translate-y-1">
-              <span className="group-hover:text-white transition-colors duration-300">Get Free Consultation</span>
-            </button>
+            </Link>
+           
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-4 border-t border-gray-800">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-gray-400 text-lg">
-            © 2025 Custom Software Solutions. Building Tomorrow's Technology Today.
-          </p>
-        </div>
-      </footer>
+     
 
       {/* Custom Styles */}
       <style jsx>{`
